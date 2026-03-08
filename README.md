@@ -1,9 +1,8 @@
-<<<<<<< HEAD
 # Production Schedule Reflow System
 
 ## Overview
 
-This project implements a **production schedule reflow algorithm** for a manufacturing facility. When disruptions occur (such as delays or maintenance), the system recalculates the schedule while respecting operational constraints.
+This project implements a **production schedule reflow algorithm** for a manufacturing facility. When disruptions occur (such as delays, extended job durations, or maintenance), the system recalculates the schedule while respecting operational constraints.
 
 The algorithm ensures a **valid schedule** that satisfies:
 
@@ -38,12 +37,12 @@ Manufacturing facilities run multiple machines (work centers). Work orders must 
 3. **Shift Boundaries**
 
    * Work can only occur during defined shift hours.
-   * If work extends beyond the shift, it pauses and resumes next shift.
+   * If work extends beyond the shift, it pauses and resumes in the next shift.
 
 4. **Maintenance Windows**
 
    * Machines may have scheduled maintenance periods.
-   * No work can occur during maintenance.
+   * No work can occur during maintenance windows.
 
 5. **Maintenance Work Orders**
 
@@ -54,7 +53,7 @@ Manufacturing facilities run multiple machines (work centers). Work orders must 
 
 ## Algorithm Approach
 
-The scheduler uses a **Directed Acyclic Graph (DAG)** approach with **topological sorting**.
+The scheduler uses a **Directed Acyclic Graph (DAG)** approach combined with **topological sorting**.
 
 ### Step 1 — Build Dependency Graph
 
@@ -142,7 +141,7 @@ Shows:
 
 ### Explanation
 
-Human‑readable explanation for each change.
+Human-readable explanation for each change.
 
 Example:
 
@@ -158,20 +157,30 @@ Reasons:
 ## Project Structure
 
 ```
-src/
-├── index.ts
+NAOLOGICTEST/
+├── node_modules/
+├── src/
+│   ├── index.ts
+│   │
+│   ├── prompts/
+│   │   └── algorithm-design.md
+│   │
+│   ├── reflow/
+│   │   ├── constraint-checker.ts
+│   │   ├── dag.ts
+│   │   ├── reflow.service.ts
+│   │   └── types.ts
+│   │
+│   ├── sample-data/
+│   │   └── scenarios.json
+│   │
+│   └── utils/
+│       └── date-utils.ts
 │
-├── reflow/
-│   ├── reflow.service.ts
-│   ├── dag.ts
-│   ├── constraint-checker.ts
-│   └── types.ts
-│
-└── utils/
-    └── date-utils.ts
-
-sample-data/
-└── scenarios.json
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+└── README.md
 ```
 
 ---
@@ -188,11 +197,15 @@ Example:
 
 WO-A delayed → WO-B delayed → WO-C delayed
 
+---
+
 ### 2. Maintenance Window
 
 A machine has a maintenance window that blocks production.
 
 The scheduler moves work orders to avoid the blocked time.
+
+---
 
 ### 3. Dependency Chain
 
@@ -204,7 +217,7 @@ Parent completes → Child starts
 
 ---
 
-## How to Run
+## Running the Project
 
 ### Install Dependencies
 
@@ -218,20 +231,34 @@ npm install
 npm run dev
 ```
 
+The scheduler loads scenarios from:
+
+```
+src/sample-data/scenarios.json
+```
+
+and prints:
+
+* Updated schedule
+* Change summary
+* Explanation of scheduling decisions
+
 ---
 
-## Expected Output
+## Example Output
 
 Example output:
 
 Scenario: Delay Cascade
 
 Updated Schedule:
+
 WO-A 08:00 → 12:00
 WO-B 12:00 → 14:00
 WO-C 14:00 → 17:00
 
 Changes:
+
 WO-B delayed due to dependency and work center conflict
 
 ---
@@ -295,7 +322,4 @@ Tracks:
 
 ## Conclusion
 
-This system demonstrates a production scheduling algorithm capable of handling real‑world manufacturing constraints while generating a valid schedule and clear explanations for scheduling changes.
-=======
-# naologic-production-scheduler
->>>>>>> 1f458758476ae961add5d8a642ff279e7b431271
+This system demonstrates a production scheduling algorithm capable of handling real-world manufacturing constraints while generating a valid schedule and clear explanations for scheduling changes.

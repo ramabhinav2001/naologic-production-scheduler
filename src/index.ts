@@ -1,5 +1,6 @@
 import fs from "fs";
 import { ReflowService } from "./reflow/reflow.service";
+import { printGantt } from "./utils/gantt";
 
 const data = JSON.parse(
   fs.readFileSync("./src/sample-data/scenarios.json", "utf8")
@@ -7,7 +8,7 @@ const data = JSON.parse(
 
 const reflowService = new ReflowService();
 
-for (const scenario of data.scenarios) {
+for (const scenario of data.scenarios.slice(0, 3)) {
 
   console.log("\n=====================");
   console.log("Scenario:", scenario.name);
@@ -17,12 +18,26 @@ for (const scenario of data.scenarios) {
     workCenters: scenario.workCenters
   });
 
-  console.log("Updated Schedule:");
-  console.log(result.updatedWorkOrders);
+  console.log("\nUpdated Schedule:");
+  console.table(
+    result.updatedWorkOrders.map((w: any) => ({
+      workOrder: w.data.workOrderNumber,
+      workCenter: w.data.workCenterId,
+      start: w.data.startDate,
+      end: w.data.endDate
+    }))
+  );
 
   console.log("\nChanges:");
-  console.log(result.changes);
+  console.table(result.changes);
 
   console.log("\nExplanation:");
-  console.log(result.explanation);
+
+  for (const [id, text] of Object.entries(result.explanation)) {
+    console.log(`\n${id}`);
+    console.log(text);
+  }
+
+  console.log("\nGantt Timeline:");
+  printGantt(result.updatedWorkOrders);
 }

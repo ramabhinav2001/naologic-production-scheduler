@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Production Schedule Reflow System
 
 ## Overview

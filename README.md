@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Production Schedule Reflow System
 
 ## Overview
@@ -295,3 +296,6 @@ Tracks:
 ## Conclusion
 
 This system demonstrates a production scheduling algorithm capable of handling real‑world manufacturing constraints while generating a valid schedule and clear explanations for scheduling changes.
+=======
+# naologic-production-scheduler
+>>>>>>> 1f458758476ae961add5d8a642ff279e7b431271
